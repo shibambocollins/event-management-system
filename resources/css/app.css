@@ -1,0 +1,11 @@
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */
+
+/* Add basic CSS if needed */
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+}
