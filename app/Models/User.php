@@ -10,45 +10,62 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected \ = [
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
         'name',
         'email',
         'password',
         'role',
     ];
 
-    protected \ = [
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    protected \ = [
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
+    // Role check methods
     public function isAdmin(): bool
     {
-        return \->role === 'admin';
+        return $this->role === 'admin';
     }
 
     public function isOrganizer(): bool
     {
-        return \->role === 'organizer';
+        return $this->role === 'organizer';
     }
 
     public function isAttendee(): bool
     {
-        return \->role === 'attendee';
+        return $this->role === 'attendee';
     }
 
+    // Relationships
     public function organizedEvents()
     {
-        return \->hasMany(EventABC::class, 'organizer_id');
+        return $this->hasMany(EventABC::class, 'organizer_id');
     }
 
     public function registrations()
     {
-        return \->hasMany(RegistrationABC::class);
+        return $this->hasMany(RegistrationABC::class);
     }
 }
