@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RegistrationABC extends Model
 {
-    protected \ = 'registrations';
+    protected $table = 'registrations';
     
-    protected \ = ['event_id', 'user_id', 'status'];
+    protected $fillable = ['event_id', 'user_id', 'status'];
     
     public function event(): BelongsTo
     {
-        return \->belongsTo(EventABC::class);
+        return $this->belongsTo(EventABC::class);
     }
     
     public function user(): BelongsTo
     {
-        return \->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
