@@ -8,34 +8,39 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventABC extends Model
 {
-    protected \ = 'events';
+    protected $table = 'events';
     
-    protected \ = [
-        'title', 'description', 'event_date', 
-        'location', 'max_attendees', 'organizer_id'
+    protected $fillable = [
+        'title',
+        'description',
+        'event_date',
+        'location',
+        'max_attendees',
+        'organizer_id'
     ];
     
-    protected \ = [
+    protected $casts = [
         'event_date' => 'datetime',
     ];
     
     public function organizer(): BelongsTo
     {
-        return \->belongsTo(User::class, 'organizer_id');
+        return $this->belongsTo(User::class, 'organizer_id');
     }
     
+   // Added method to get registrations for the event
     public function registrations(): HasMany
     {
-        return \->hasMany(RegistrationABC::class, 'event_id');
+        return $this->hasMany(RegistrationABC::class, 'event_id');
     }
     
     public function getApprovedCountAttribute(): int
     {
-        return \->registrations()->where('status', 'approved')->count();
+        return $this->registrations()->where('status', 'approved')->count();
     }
     
     public function isFull(): bool
     {
-        return \->approved_count >= \->max_attendees;
+        return $this->getApprovedCountAttribute() >= $this->max_attendees;
     }
 }
